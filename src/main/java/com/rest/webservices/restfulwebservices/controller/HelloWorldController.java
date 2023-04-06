@@ -30,7 +30,7 @@ public class HelloWorldController {
     public HelloWorldBean helloworldBean(@PathVariable String name){
         return new HelloWorldBean(String.format("Hello World, %s",name));
     }
-
+    //localhost/actuator for monitor api
 
     @GetMapping(path="/hello-world-internationalized")
     public String helloWorldInternationalized(){
