@@ -1,7 +1,9 @@
 package com.rest.webservices.restfulwebservices.user;
 
-
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import jakarta.validation.Valid;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -24,7 +26,7 @@ public class UserResource {
     }
 
     @GetMapping("/users/{id}")
-    public User retrieveUsers(@PathVariable int id){
+    public User retrieveUser(@PathVariable int id){
 
         User user = service.findOne(id);
 
@@ -46,6 +48,45 @@ public class UserResource {
         service.deleteById(id);
     }
 
+
+    //Entity Model
+    //WebMvcLinkBuilder
+    //Hateoas
+    @GetMapping("/users/{id}")
+    public EntityModel<User> retrieveUserEntityModel(@PathVariable int id){
+
+        User user = service.findOne(id);
+
+        if(user==null){
+            throw new UserNotFoundException("+id:"+id);
+        }
+
+        EntityModel<User> entityModel = EntityModel.of(user);
+
+        WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).retrieveAllUsers());
+
+        entityModel.add(link.withRel("all-users"));
+
+        // içine link koyduk ve bütün kullanıcılara yollamasını sağladık
+        /*
+        * { "id":1,
+        * "name":"ADAM"
+        * "birthdate":"123123-123-12,
+        * "_links":{
+        *       "all-users": {
+        *           "href":"http:localhost.8080/users"
+        *       }
+        *  }
+        * }
+        *
+        *
+        *
+        *
+        * */
+        return entityModel;
+
+
+    }
 
 
 
