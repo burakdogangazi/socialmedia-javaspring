@@ -1,23 +1,24 @@
 package com.rest.webservices.restfulwebservices.Exception;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ErrorDetails {
-    private LocalDate timeStamp;
+    private LocalDateTime timeStamp;
     private String message;
     private String details;
 
-    public ErrorDetails(LocalDate timeStamp, String message, String details) {
+    public ErrorDetails(LocalDateTime timeStamp, String message, String details) {
         this.timeStamp = timeStamp;
         this.message = message;
         this.details = details;
     }
 
-    public LocalDate getTimeStamp() {
+    public LocalDateTime getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(LocalDate timeStamp) {
+    public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
     }
 
